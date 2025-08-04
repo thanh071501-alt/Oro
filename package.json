@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "description": "OROSWAP Bot - Wallet Keplr/Leap - Bactiar291",
   "main": "main.js",
-  "scripts": {
-    "start": "node menu.js",
-    "single": "node main.js",
-    "multi-sequential": "node multi-wallet-sequential.js",
-    "multi-parallel": "node multi-wallet-parallel.js",
-    "multi-limit": "node multi-wallet-parallel.js limit 3",
-    "multi-limit-5": "node multi-wallet-parallel.js limit 5"
+ "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
   },
   "author": "bactiar291",
   "license": "MIT",
