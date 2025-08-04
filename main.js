@@ -237,32 +237,7 @@ async function runBot() {
     } catch (error) {
         console.error("\x1b[31m%s\x1b[0m", "❌ Mnemonic không hợp lệ trong file phrase.txt: ", error.message);
         return;
-    }
-
-    // Kiểm tra số dư ví trước khi chạy
-    try {
-        const zigBalance = await getBalance(MNEMONIC, CONFIG.zigDenom);
-        const oroBalance = await getBalance(MNEMONIC, CONFIG.oroDenom);
-        console.log(`💰 Số dư ví: ${zigBalance.formatted} ZIG, ${oroBalance.formatted} ORO`);
-        
-        // Tính toán tổng token cần thiết
-        const totalSwaps = 20 * (1 + 1); // 20 swap ZIG->ORO + 20 swap ORO->ZIG
-        const totalAddLiquidity = 20 * 1; // 20 lần thêm thanh khoản
-        const totalZigRequired = (20 * 1 * ZIG_AMOUNT) + (20 * 1 * LIQ_ORO * 4); // Giả sử tỷ lệ tối đa
-        const totalOroRequired = (20 * 1 * ORO_AMOUNT) + (20 * 1 * LIQ_ORO);
-        const totalGasFee = (totalSwaps * 320000 * 0.025 / 1e6) + (totalAddLiquidity * 500000 * 0.025 / 1e6);
-        
-        console.log(`\n🔍 Tổng token cần: ${totalZigRequired.toFixed(4)} ZIG, ${totalOroRequired.toFixed(4)} ORO`);
-        console.log(`🔍 Ước tính phí gas: ${totalGasFee.toFixed(4)} ZIG`);
-        
-        if (zigBalance.formatted < totalZigRequired + totalGasFee || oroBalance.formatted < totalOroRequired) {
-            console.log("\x1b[31m%s\x1b[0m", `❌ Số dư ví không đủ! Cần ít nhất ${totalZigRequired.toFixed(4)} ZIG + ${totalGasFee.toFixed(4)} ZIG (gas) và ${totalOroRequired.toFixed(4)} ORO.`);
-            return;
-        }
-    } catch (error) {
-        console.error(`❌ Không thể kiểm tra số dư:`, error.message);
-        return;
-    }
+    }    
 
     for (let liqCount = 0; liqCount < 100; liqCount++) {
         console.log(`\n=== Chu kỳ Swap thứ ${liqCount + 1} ===`);
