@@ -239,7 +239,7 @@ async function runBot() {
         return;
     }    
 
-    for (let liqCount = 0; liqCount < 100; liqCount++) {
+    for (let liqCount = 0; liqCount < 1000000; liqCount++) {
         console.log(`\n=== Chu kỳ Swap thứ ${liqCount + 1} ===`);
         // Swap ZIG -> ORO
         for (let i = 0; i < 10; i++) {
