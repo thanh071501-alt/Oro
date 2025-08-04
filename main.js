@@ -56,7 +56,7 @@ const ORO_AMOUNT = getRandomAmount();
 const LIQ_ORO = getRandomAmount();
 
 const delay = async (ms) => {
-   process.stdout.write(`\r⏳ Đang chờ ${i} giây... `);
+    process.stdout.write(`\r⏳ Đang chờ ${ms / 1000} giây... `);
     await new Promise(res => setTimeout(res, ms));
     console.log("✅ Hoàn thành chờ");
 };
