@@ -4,7 +4,19 @@ const readline = require("readline");
 const { SigningCosmWasmClient, CosmWasmClient } = require('@cosmjs/cosmwasm-stargate');
 const { DirectSecp256k1HdWallet } = require('@cosmjs/proto-signing');
 const { calculateFee, GasPrice } = require('@cosmjs/stargate');
+const http = require('http');
 
+const PORT = process.env.PORT || 3000;
+
+// Tạo HTTP server đơn giản
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('OROSWAP BOT is running!');
+});
+
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+});
 console.clear();
 console.log("\x1b[35m%s\x1b[0m", "============================================");
 console.log("\x1b[36m%s\x1b[0m", "      OROSWAP BOT - VÍ KEPLR/LEAP       ");
