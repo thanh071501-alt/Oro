@@ -132,7 +132,7 @@ async function swap(mnemonic, amount, fromDenom, toDenom) {
         });
 
         const baseAmount = Math.floor(amount * 1e6).toString();
-        const beliefPrice = await getBeliefPrice(fromDenom, baseAmount);
+        //const beliefPrice = await getBeliefPrice(fromDenom, baseAmount);
         const fee = calculateFee(320000, CONFIG.gasPrice);
 
         const msg = {
