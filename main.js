@@ -74,21 +74,37 @@ async function getBalance(mnemonic, denom) {
     }
 }
 
-async function getBeliefPrice(denom, amount) {
-    try {
-        const client = await CosmWasmClient.connect(CONFIG.rpcEndpoint);
-        const sim = await client.queryContractSmart(CONFIG.swapContract, {
-            simulation: {
-                offer_asset: {
-                    amount,
-                    info: { native_token: { denom: denom } }
+async function getBeliefPrice(denom, amount, retries = 3, delayMs = 90000) {
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+            const client = await CosmWasmClient.connect(CONFIG.rpcEndpoint);
+            const sim = await client.queryContractSmart(CONFIG.swapContract, {
+                simulation: {
+                    offer_asset: {
+                        amount,
+                        info: { native_token: { denom: denom } }
+                    }
                 }
+            });
+
+            // Kiểm tra sim.return_amount có hợp lệ không
+            if (!sim.return_amount || BigInt(sim.return_amount) <= 0) {
+                throw new Error("Giá trị return_amount không hợp lệ hoặc bằng 0");
             }
-        });
-        const beliefPrice = (BigInt(amount) * BigInt(1e6)) / BigInt(sim.return_amount);
-        return (Number(beliefPrice) / 1e6).toFixed(18);
-    } catch (e) {
-        throw new Error(`Không thể lấy belief price: ${e.message}`);
+
+            const beliefPrice = (BigInt(amount) * BigInt(1e6)) / BigInt(sim.return_amount);
+            return (Number(beliefPrice) / 1e6).toFixed(18);
+        } catch (e) {
+            console.warn(`⚠️ Lỗi lấy belief price (lần ${attempt}/${retries}): ${e.message}`);
+            if (attempt < retries) {
+                console.log(`⏳ Thử lại sau ${delayMs / 1000} giây...`);
+                await new Promise(res => setTimeout(res, delayMs));
+                continue;
+            } else {
+                console.error(`❌ Không thể lấy belief price sau ${retries} lần thử: ${e.message}`);
+                return null; // Trả về null thay vì throw để không dừng chương trình
+            }
+        }
     }
 }
 
@@ -132,7 +148,7 @@ async function swap(mnemonic, amount, fromDenom, toDenom) {
         });
 
         const baseAmount = Math.floor(amount * 1e6).toString();
-        //const beliefPrice = await getBeliefPrice(fromDenom, baseAmount);
+        const beliefPrice = await getBeliefPrice(fromDenom, baseAmount);
         const fee = calculateFee(320000, CONFIG.gasPrice);
 
         const msg = {
