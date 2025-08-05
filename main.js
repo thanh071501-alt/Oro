@@ -18,7 +18,7 @@ setInterval(async () => {
     } catch (error) {
         console.log('❌ Ping failed:', error.message);
     }
-}, 5 * 60 * 1000); // 10 phút
+}, 10 * 60 * 1000); // 10 phút
 // Tạo HTTP server đơn giản
 const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -39,7 +39,7 @@ wealth option session shy tube chef traffic seed grow word crack almost
 `.trim();
 
 const CONFIG = {
-    rpcEndpoint: "https://testnet-rpc.zigchain.com",
+    rpcEndpoint: "https://public-zigchain-testnet-rpc.numia.xyz",
     chainId: "zig-test-2",
     zigDenom: "uzig",
     oroDenom: "coin.zig10rfjm85jmzfhravjwpq3hcdz8ngxg7lxd0drkr.uoro",
