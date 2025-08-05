@@ -162,7 +162,7 @@ async function addLiquidity(mnemonic, amountUoro, amountUzig) {
             { denom: CONFIG.zigDenom, amount: uzigBaseAmount }
         ];
 
-        const fee = calculateFee(270000, CONFIG.gasPrice);
+        const fee = calculateFee(320000, CONFIG.gasPrice);
 
         const result = await client.execute(account.address, CONFIG.swapContract, msg, fee, "Swap", funds);
 
