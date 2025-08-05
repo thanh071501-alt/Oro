@@ -18,7 +18,7 @@ setInterval(async () => {
     } catch (error) {
         console.log('❌ Ping failed:', error.message);
     }
-}, 10 * 60 * 1000); // 10 phút
+}, 5 * 60 * 1000); // 10 phút
 // Tạo HTTP server đơn giản
 const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
