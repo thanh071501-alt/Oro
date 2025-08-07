@@ -178,19 +178,19 @@ async function runBot() {
         console.log(`\n=== Chu kỳ Swap thứ ${liqCount + 1} ===`);
         for (let i = 0; i < 20; i++) {
             await swap(MNEMONIC, ZIG_AMOUNT, CONFIG.zigDenom, CONFIG.oroDenom);
-            await delay(30000);
+            await delay(5000);
         }
 
         for (let i = 0; i < 10; i++) {
             await swap(MNEMONIC, ORO_AMOUNT, CONFIG.oroDenom, CONFIG.zigDenom);
-            await delay(30000);
+            await delay(5000);
         }
 
-         for (let i = 0; i < 1; i++) {
-           console.log("\n💧 Đang thêm thanh khoản...");
-            await addLiquidity(MNEMONIC, LIQ_ORO, LIQ_ZIG);
-            await delay(60000);
-        }
+         //for (let i = 0; i < 1; i++) {
+           //console.log("\n💧 Đang thêm thanh khoản...");
+           // await addLiquidity(MNEMONIC, LIQ_ORO, LIQ_ZIG);
+           // await delay(60000);
+        //}
 
         
     }
