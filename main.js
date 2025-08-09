@@ -178,12 +178,12 @@ async function runBot() {
         console.log(`\n=== Chu kỳ Swap thứ ${liqCount + 1} ===`);
         for (let i = 0; i < 20; i++) {
             await swap(MNEMONIC, ZIG_AMOUNT, CONFIG.zigDenom, CONFIG.oroDenom);
-            await delay(50000);
+            await delay(5000);
         }
 
         for (let i = 0; i < 10; i++) {
             await swap(MNEMONIC, ORO_AMOUNT, CONFIG.oroDenom, CONFIG.zigDenom);
-            await delay(50000);
+            await delay(5000);
         }
 
          //for (let i = 0; i < 1; i++) {
